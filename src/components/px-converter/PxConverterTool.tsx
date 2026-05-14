@@ -1,9 +1,8 @@
 "use client";
 
 import { useReducer, useState } from "react";
+import clsx from "clsx";
 import { ArrowLeftRight, Check, Copy } from "lucide-react";
-import { Button } from "../ui/Button";
-import { NumberInput } from "../ui/NumberInput";
 import { PresetChips } from "../ui/PresetChips";
 import {
   DEFAULT_BASE_PX,
@@ -14,7 +13,6 @@ import {
 import { ONYLOGY_PRESETS } from "@/lib/onylogy-presets";
 
 const ICON = { className: "h-4 w-4", strokeWidth: 1.5 } as const;
-const SWAP_ICON = { className: "h-5 w-5", strokeWidth: 1.5 } as const;
 
 interface State {
   basePx: number;
@@ -69,103 +67,59 @@ export function PxConverterTool() {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-5">
-      <div>
-        <h1 className="font-display text-2xl sm:text-[28px] font-semibold tracking-tight">
-          PX Converter
+    <div className="space-y-6 sm:space-y-8">
+      <header className="text-center max-w-2xl mx-auto pt-2 sm:pt-4">
+        <h1 className="font-display text-2xl sm:text-3xl font-semibold tracking-tight">
+          PX to REM converter
         </h1>
-        <p className="text-sm text-foreground-muted mt-0.5">
-          Convert pixels to the CSS rem unit and back. The default base is 16px (the browser default
-          for the root <code className="font-mono text-[12px] bg-surface-muted px-1 py-0.5 rounded">&lt;html&gt;</code>
-          font-size) but you can change it.
+        <p className="text-sm text-foreground-muted mt-1">
+          Convert pixels to the CSS rem unit and back. The conversion works in both directions —
+          edit either value.
+        </p>
+      </header>
+
+      <div className="mx-auto w-full max-w-3xl">
+        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 sm:gap-4">
+          <UnitCard
+            label="Pixels"
+            unit="px"
+            value={state.px}
+            onChange={(v) => dispatch({ type: "setPx", value: v })}
+            onCopy={() => handleCopy("px")}
+            copied={copied === "px"}
+            inputAriaLabel="Pixel value"
+          />
+          <div className="hidden sm:flex justify-center text-foreground-muted">
+            <ArrowLeftRight className="h-5 w-5" strokeWidth={1.5} />
+          </div>
+          <div className="sm:hidden flex justify-center text-foreground-muted py-1">
+            <ArrowLeftRight className="h-4 w-4" strokeWidth={1.5} />
+          </div>
+          <UnitCard
+            label="REM"
+            unit="rem"
+            value={Number(formatNumber(state.rem))}
+            onChange={(v) => dispatch({ type: "setRem", value: v })}
+            onCopy={() => handleCopy("rem")}
+            copied={copied === "rem"}
+            inputAriaLabel="Rem value"
+            highlight
+          />
+        </div>
+
+        <p className="text-center text-sm text-foreground-muted mt-5">
+          Calculation based on a root font-size of{" "}
+          <BaseEditor
+            value={state.basePx}
+            onChange={(n) => dispatch({ type: "setBase", value: n })}
+          />{" "}
+          pixel.
         </p>
       </div>
 
-      <div className="rounded-xl border border-border-base bg-surface p-5 sm:p-6 space-y-5">
-        <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
-          <label className="flex flex-col gap-1 text-xs">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80">
-              Base font-size
-            </span>
-            <NumberInput
-              value={state.basePx}
-              onChange={(n) => dispatch({ type: "setBase", value: Math.max(1, n) })}
-              min={1}
-              max={64}
-              ariaLabel="Base font-size in pixels"
-            />
-          </label>
-          <p className="text-xs text-foreground-muted pb-1 max-w-md">
-            Sets the conversion ratio. Most browsers default to 16px.
-          </p>
-        </div>
-
-        <hr className="border-border-base/70" />
-
-        <div className="flex flex-wrap items-end gap-x-3 gap-y-4">
-          <label className="flex flex-col gap-1">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80">
-              Pixel
-            </span>
-            <div className="flex items-center gap-2">
-              <NumberInput
-                value={state.px}
-                onChange={(n) => dispatch({ type: "setPx", value: n })}
-                min={0}
-                max={5000}
-                ariaLabel="Pixel value"
-                className="min-w-[140px]"
-              />
-              <span className="text-sm text-foreground-muted">px</span>
-            </div>
-          </label>
-
-          <div className="pb-2 self-center text-foreground-muted" aria-hidden>
-            <ArrowLeftRight {...SWAP_ICON} />
-          </div>
-
-          <label className="flex flex-col gap-1">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80">
-              Rem
-            </span>
-            <div className="flex items-center gap-2">
-              <NumberInput
-                value={Number(formatNumber(state.rem))}
-                onChange={(n) => dispatch({ type: "setRem", value: n })}
-                min={0}
-                max={500}
-                step={0.0625}
-                ariaLabel="Rem value"
-                className="min-w-[140px]"
-              />
-              <span className="text-sm text-foreground-muted">rem</span>
-            </div>
-          </label>
-
-          <div className="ml-auto flex items-center gap-2">
-            <Button
-              onClick={() => handleCopy("px")}
-              variant="secondary"
-              size="md"
-              aria-label="Copy pixel value"
-            >
-              {copied === "px" ? <Check {...ICON} /> : <Copy {...ICON} />}
-              {copied === "px" ? "Copied!" : `Copy ${formatNumber(state.px)}px`}
-            </Button>
-            <Button
-              onClick={() => handleCopy("rem")}
-              variant="secondary"
-              size="md"
-              aria-label="Copy rem value"
-            >
-              {copied === "rem" ? <Check {...ICON} /> : <Copy {...ICON} />}
-              {copied === "rem" ? "Copied!" : `Copy ${formatNumber(state.rem)}rem`}
-            </Button>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <div className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80">
+      <div className="mx-auto w-full max-w-3xl">
+        <div className="rounded-xl border border-border-base bg-surface p-4 sm:p-5">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-foreground-muted/80 mb-2">
             Presets (px)
           </div>
           <PresetChips
@@ -176,14 +130,95 @@ export function PxConverterTool() {
             ariaLabel="Pixel value presets"
           />
         </div>
-
-        <div className="text-sm text-foreground-muted">
-          <span className="font-mono text-foreground">{formatNumber(state.px)}px</span>
-          {" "}={" "}
-          <span className="font-mono text-foreground">{formatNumber(state.rem)}rem</span>
-          {" "}(base: {state.basePx}px)
-        </div>
       </div>
     </div>
+  );
+}
+
+interface UnitCardProps {
+  label: string;
+  unit: string;
+  value: number;
+  onChange: (n: number) => void;
+  onCopy: () => void;
+  copied: boolean;
+  inputAriaLabel: string;
+  highlight?: boolean;
+}
+
+function UnitCard({
+  label,
+  unit,
+  value,
+  onChange,
+  onCopy,
+  copied,
+  inputAriaLabel,
+  highlight,
+}: UnitCardProps) {
+  return (
+    <div className="space-y-2">
+      <div className="text-center text-sm font-medium text-foreground-muted">
+        {label}
+      </div>
+      <div className="rounded-xl border border-border-base bg-surface px-3 py-4 sm:py-5 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onCopy}
+          aria-label={copied ? "Copied" : `Copy ${label} value`}
+          className="shrink-0 h-8 w-8 rounded-md text-foreground-muted hover:text-foreground hover:bg-surface-muted flex items-center justify-center cursor-pointer transition-colors"
+        >
+          {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
+        </button>
+        <input
+          type="number"
+          value={value}
+          step={unit === "rem" ? 0.0625 : 1}
+          onChange={(e) => {
+            const n = Number(e.target.value);
+            if (Number.isFinite(n)) onChange(n);
+          }}
+          aria-label={inputAriaLabel}
+          className={clsx(
+            "flex-1 min-w-0 bg-transparent text-center font-display tabular-nums",
+            "text-3xl sm:text-4xl font-light",
+            "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+            "focus:outline-none",
+            highlight && "text-accent",
+          )}
+        />
+        <span className="shrink-0 w-10 text-right text-sm text-foreground-muted">
+          {unit}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function BaseEditor({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (n: number) => void;
+}) {
+  return (
+    <input
+      type="number"
+      value={value}
+      min={1}
+      max={64}
+      onChange={(e) => {
+        const n = Number(e.target.value);
+        if (Number.isFinite(n) && n > 0) onChange(n);
+      }}
+      aria-label="Root font-size in pixels"
+      className={clsx(
+        "inline-block w-12 text-center font-mono tabular-nums",
+        "border-b border-dashed border-foreground-muted/40 hover:border-foreground/60 focus:border-accent",
+        "bg-transparent text-foreground focus:outline-none transition-colors",
+        "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+      )}
+    />
   );
 }

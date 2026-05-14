@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
@@ -20,30 +21,42 @@ const TOOLS: Tool[] = [
 
 export function AppNav() {
   const pathname = usePathname();
+  const navRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const ul = navRef.current;
+    if (!ul) return;
+    const active = ul.querySelector<HTMLAnchorElement>('a[aria-current="page"]');
+    const scroller = ul.parentElement; // the <nav> with overflow-x-auto
+    if (!active || !scroller) return;
+    const aLeft = active.offsetLeft;
+    const aWidth = active.offsetWidth;
+    const visibleW = scroller.clientWidth;
+    const target = Math.max(0, aLeft - (visibleW - aWidth) / 2);
+    scroller.scrollLeft = target;
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-20 backdrop-blur bg-background/85 border-b border-border-base">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="h-12 flex items-center justify-between">
-          <Link
-            href="/copy-generator"
-            className="flex items-center gap-2 group"
-            aria-label="Onylogy Tools"
-          >
-            <span className="h-6 w-6 rounded-md bg-accent text-accent-foreground flex items-center justify-center">
-              <Sparkles className="h-3.5 w-3.5" strokeWidth={1.75} />
-            </span>
-            <span className="font-display text-[15px] font-semibold tracking-tight">
-              Onylogy Tools
-            </span>
-          </Link>
-          <ThemeToggle />
-        </div>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 h-14 flex items-center gap-4">
+        <Link
+          href="/copy-generator"
+          className="flex items-center gap-2 shrink-0"
+          aria-label="Onylogy Tools"
+        >
+          <span className="h-7 w-7 rounded-md bg-accent text-accent-foreground flex items-center justify-center">
+            <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+          </span>
+          <span className="hidden sm:inline font-display text-[15px] font-semibold tracking-tight whitespace-nowrap">
+            Onylogy Tools
+          </span>
+        </Link>
+
         <nav
           aria-label="Tools"
-          className="-mx-4 sm:mx-0 overflow-x-auto scrollbar-thin"
+          className="flex-1 min-w-0 -mx-2 overflow-x-auto scrollbar-thin"
         >
-          <ul className="flex items-center gap-1 px-4 sm:px-0 pb-2 pt-0.5 min-w-max">
+          <ul ref={navRef} className="flex items-center gap-1 px-2 min-w-max">
             {TOOLS.map((tool) => {
               const active =
                 pathname === tool.href ||
@@ -67,6 +80,10 @@ export function AppNav() {
             })}
           </ul>
         </nav>
+
+        <div className="shrink-0">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
