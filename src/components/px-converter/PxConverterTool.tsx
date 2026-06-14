@@ -106,10 +106,10 @@ export function PxConverterTool() {
       </header>
 
       <div className="mx-auto w-full max-w-2xl">
-        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 sm:gap-4">
           {swapped ? remCard : pxCard}
 
-          <div className="flex justify-center pb-3.5">
+          <div className="flex justify-center sm:pt-6">
             <button
               type="button"
               onClick={() => setSwapped((v) => !v)}
@@ -180,7 +180,7 @@ function UnitCard({
       </div>
       <div
         className={clsx(
-          "rounded-2xl border bg-surface shadow-card px-3 py-5 sm:py-6 flex items-center gap-2 transition-colors",
+          "rounded-2xl border bg-surface shadow-card px-3 py-3 sm:py-3.5 flex items-center gap-2 transition-colors",
           highlight ? "border-accent/40" : "border-border-base",
         )}
       >
@@ -203,7 +203,7 @@ function UnitCard({
           aria-label={inputAriaLabel}
           className={clsx(
             "flex-1 min-w-0 bg-transparent text-center font-display tabular-nums",
-            "text-3xl sm:text-4xl font-medium",
+            "text-2xl sm:text-3xl font-light",
             "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
             "focus:outline-none",
             highlight && "text-accent",

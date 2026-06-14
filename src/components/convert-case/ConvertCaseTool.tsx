@@ -35,7 +35,7 @@ export function ConvertCaseTool() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-5 sm:space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       <header className="text-center max-w-2xl mx-auto">
         <h1 className="font-display text-[26px] sm:text-[32px] font-semibold tracking-tight">
           Convert Case
