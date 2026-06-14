@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { GeneratorApp } from "@/components/GeneratorApp";
 
 export const metadata: Metadata = {
-  title: "Onylogy Copy Generator — placeholder text & mock data",
+  title: "Copy Generator — Lorem Ipsum & Mock Data",
   description:
-    "Generate meaningful placeholder text, lorem ipsum, JSON mock data, UUIDs, emails, slugs, HEX colors, and more — all client-side.",
+    "Generate placeholder copy and mock data: meaningful English, lorem ipsum, JSON, UUIDs, emails, slugs, names, HEX colors, and more. 16 generators with instant counts and history — all free and client-side.",
 };
 
 export default function CopyGeneratorPage() {

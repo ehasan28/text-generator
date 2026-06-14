@@ -40,9 +40,9 @@ export function AppNav() {
     <header className="sticky top-0 z-20 backdrop-blur bg-background/85 border-b border-border-base">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 h-14 flex items-center gap-4">
         <Link
-          href="/copy-generator"
+          href="/"
           className="flex items-center gap-2 shrink-0"
-          aria-label="Onylogy Tools"
+          aria-label="Onylogy Tools — home"
         >
           <span className="h-7 w-7 rounded-md bg-accent text-accent-foreground flex items-center justify-center">
             <Sparkles className="h-4 w-4" strokeWidth={1.75} />

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { themeBootstrapScript } from "@/lib/theme";
+import { AppNav } from "@/components/shell/AppNav";
+import { SiteFooter } from "@/components/shell/SiteFooter";
 import "./globals.css";
 
 const heading = Space_Grotesk({
@@ -22,13 +24,46 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
+const SITE_URL = "https://text-generator-rouge.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Onylogy Tools — Copy generator, PX converter, Clamp generator, Case converter",
+    default: "Onylogy Tools — Free Web Dev & Design Utilities",
     template: "%s · Onylogy Tools",
   },
   description:
-    "A focused set of client-side web-dev tools: copy generator (lorem ipsum, mock data, identifiers), PX↔rem converter, fluid clamp() generator, and text case converter.",
+    "Free, fast, client-side tools for developers and designers: a placeholder copy generator, a PX-to-REM converter, a fluid CSS clamp() generator, and a text case converter. No sign-up — nothing ever leaves your browser.",
+  applicationName: "Onylogy Tools",
+  authors: [{ name: "Onylogy", url: "https://onylogy.com" }],
+  creator: "Onylogy",
+  keywords: [
+    "lorem ipsum generator",
+    "mock data generator",
+    "px to rem converter",
+    "rem to px",
+    "css clamp generator",
+    "fluid typography calculator",
+    "clamp() calculator",
+    "case converter",
+    "camelCase converter",
+    "developer tools",
+    "web design tools",
+  ],
+  openGraph: {
+    type: "website",
+    siteName: "Onylogy Tools",
+    url: SITE_URL,
+    title: "Onylogy Tools — Free Web Dev & Design Utilities",
+    description:
+      "A placeholder copy generator, PX↔REM converter, fluid CSS clamp() generator, and text case converter. Free, fast, and fully client-side.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Onylogy Tools — Free Web Dev & Design Utilities",
+    description:
+      "Copy generator, PX↔REM converter, fluid CSS clamp() generator, and case converter. Free & fully client-side.",
+  },
 };
 
 export default function RootLayout({
@@ -45,7 +80,11 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
       </head>
-      <body className="min-h-screen flex flex-col font-body">{children}</body>
+      <body className="min-h-screen flex flex-col bg-background text-foreground font-body">
+        <AppNav />
+        {children}
+        <SiteFooter />
+      </body>
     </html>
   );
 }

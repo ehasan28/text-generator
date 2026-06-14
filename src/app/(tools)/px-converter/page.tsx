@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { PxConverterTool } from "@/components/px-converter/PxConverterTool";
 
 export const metadata: Metadata = {
-  title: "Onylogy PX Converter — convert pixels to rem and back",
+  title: "PX to REM Converter — Pixels ↔ REM Calculator",
   description:
-    "Bidirectional pixel-to-rem CSS unit converter with configurable base font-size. Click presets, copy values, ship.",
+    "Convert px to rem and rem to px instantly, with a configurable root font-size. Swap directions, click presets, and copy values — a fast, free CSS unit converter for developers and designers.",
 };
 
 export default function PxConverterPage() {
