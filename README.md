@@ -2,7 +2,7 @@
 
 **Small, sharp tools for the web.** A growing collection of fast, focused utilities for developers and designers — placeholder copy, CSS unit conversion, fluid typography, and text transformation. Everything runs entirely in your browser; nothing is ever uploaded.
 
-🔗 **Live:** https://text-generator-rouge.vercel.app
+🔗 **Live:** https://onylogy-tools.vercel.app
 
 ---
 

@@ -24,7 +24,7 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://text-generator-rouge.vercel.app";
+const SITE_URL = "https://onylogy-tools.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
