@@ -71,53 +71,7 @@ export function ConvertCaseTool() {
         </p>
       </header>
 
-      <div className="rounded-2xl border border-border-base bg-surface shadow-card p-2.5 sm:p-3 space-y-2.5">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <Button
-            onClick={handleCopy}
-            variant="secondary"
-            size="sm"
-            disabled={!output}
-            aria-label="Copy output"
-          >
-            {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
-            {copied ? "Copied" : "Copy"}
-          </Button>
-          <Button
-            onClick={handleShare}
-            variant="secondary"
-            size="sm"
-            disabled={!output}
-            aria-label="Share output"
-          >
-            <Share2 {...ICON} />
-            Share
-          </Button>
-          <Button
-            onClick={handleDownload}
-            variant="secondary"
-            size="sm"
-            disabled={!output}
-            aria-label="Download output as a text file"
-          >
-            <Download {...ICON} />
-            Download
-          </Button>
-          <Button
-            onClick={() => setInput("")}
-            variant="ghost"
-            size="sm"
-            disabled={!input}
-            aria-label="Clear input"
-            className="ml-auto"
-          >
-            <Trash2 {...ICON} />
-            Clear
-          </Button>
-        </div>
-
-        <div className="h-px bg-border-base/70" />
-
+      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-x-4 gap-y-3">
         <div className="flex flex-wrap gap-2">
           {CASE_MODES.map((m) => {
             const active = m.id === mode;
@@ -127,7 +81,7 @@ export function ConvertCaseTool() {
                 type="button"
                 onClick={() => setMode(m.id)}
                 className={clsx(
-                  "h-8 px-3 rounded-lg text-[13px] font-medium transition-colors cursor-pointer border",
+                  "h-9 px-3.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   active
                     ? "bg-accent text-accent-foreground border-accent"
@@ -138,6 +92,49 @@ export function ConvertCaseTool() {
               </button>
             );
           })}
+        </div>
+
+        <div className="flex items-center gap-1.5 shrink-0 md:justify-end">
+          <Button
+            onClick={handleCopy}
+            variant="secondary"
+            size="md"
+            disabled={!output}
+            aria-label="Copy output"
+          >
+            {copied ? <Check {...ICON} /> : <Copy {...ICON} />}
+            {copied ? "Copied" : "Copy"}
+          </Button>
+          <Button
+            onClick={handleShare}
+            variant="secondary"
+            size="md"
+            disabled={!output}
+            aria-label="Share output"
+          >
+            <Share2 {...ICON} />
+            Share
+          </Button>
+          <Button
+            onClick={handleDownload}
+            variant="secondary"
+            size="md"
+            disabled={!output}
+            aria-label="Download output as a text file"
+          >
+            <Download {...ICON} />
+            Download
+          </Button>
+          <Button
+            onClick={() => setInput("")}
+            variant="ghost"
+            size="md"
+            disabled={!input}
+            aria-label="Clear input"
+          >
+            <Trash2 {...ICON} />
+            Clear
+          </Button>
         </div>
       </div>
 

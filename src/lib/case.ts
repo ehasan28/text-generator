@@ -3,10 +3,6 @@ export type CaseModeId =
   | "lower"
   | "title"
   | "sentence"
-  | "camel"
-  | "pascal"
-  | "snake"
-  | "kebab"
   | "constant"
   | "alternating";
 
@@ -20,10 +16,6 @@ export const CASE_MODES: CaseModeInfo[] = [
   { id: "lower", label: "lowercase" },
   { id: "title", label: "Title Case" },
   { id: "sentence", label: "Sentence case" },
-  { id: "camel", label: "camelCase" },
-  { id: "pascal", label: "PascalCase" },
-  { id: "snake", label: "snake_case" },
-  { id: "kebab", label: "kebab-case" },
   { id: "constant", label: "CONSTANT_CASE" },
   { id: "alternating", label: "aLtErNaTiNg" },
 ];
@@ -119,10 +111,6 @@ export function applyCaseMode(input: string, mode: CaseModeId): string {
     case "lower": return toLower(input);
     case "title": return toTitle(input);
     case "sentence": return toSentence(input);
-    case "camel": return toCamel(input);
-    case "pascal": return toPascal(input);
-    case "snake": return toSnake(input);
-    case "kebab": return toKebab(input);
     case "constant": return toConstant(input);
     case "alternating": return toAlternating(input);
   }
